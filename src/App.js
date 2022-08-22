@@ -1,24 +1,26 @@
 import {Routes, Route, Link, BrowserRouter} from 'react-router-dom';
 import NewPlayer from "./components/newplayer"
 import ListPlayers from "./components/playerslist"
+import {MdViewList, MdPlaylistAdd } from "react-icons/md";
 import './App.css';
+
 
 function App() {
   return (
     <>
       <header className="header">
           Players
+      </header>
         <BrowserRouter>
               <SelectionMode/>
         </BrowserRouter>
-      </header>
     </>
 
   );
 }
 
 const SelectionMode = () => {
-  return
+  return (
     <div>
       <Header/>
       <Routes>
@@ -27,23 +29,28 @@ const SelectionMode = () => {
       </Routes>
       <Footer/>
     </div>
+  )
 }
 
 const Header = () => {
   return (
-    <div>
-        <Link to="/newplayer"> New Player </Link> 
-        <Link to="/"> Players list </Link>
-    </div> 
+    <>
+      <div className='menu'> 
+            <Link to="/"> <MdViewList /> Players List </Link>
+            <Link to="/newplayer"><MdPlaylistAdd/> New Player </Link> 
+      </div> 
+      <hr />
 
-
+    </>
   );
 };
 
 const Footer = () => {
   return (
-    <div>
-    Footer
+    <div className='footer'>
+      <div className='footerText'>
+        Miro 2022
+      </div>
     </div>
   )
 }
