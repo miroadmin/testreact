@@ -1,12 +1,12 @@
 header {
-  height: 50px;
+  height: 40px;
   width:100%;
   border-bottom: 1px solid #b6b6b6;
   box-sizing: border-box;
-  padding: 17px;
   background: #d68585;
   margin-bottom: 10px;
   text-align: center;
+  font-size: 25px;
 }
 
 .menu {
@@ -15,8 +15,9 @@ header {
   align-items: center;
   justify-content: center;
   height: 30px;
-  font-size: 15px;
+  font-size: 25px;
   column-gap: 30px;
+  vertical-align: middle;
 }
 
 .body1 {
