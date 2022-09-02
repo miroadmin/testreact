@@ -1,5 +1,6 @@
 import {Routes, Route, Link, BrowserRouter} from 'react-router-dom';
 import NewPlayer from "./components/newplayer"
+import EditPlayer from "./components/editplayer"
 import ListPlayers from "./components/playerslist"
 import {MdViewList, MdPlaylistAdd } from "react-icons/md";
 import './App.css';
@@ -29,7 +30,8 @@ const SelectionMode = () => {
     <div>
       <Header/>
       <Routes>
-          <Route path="/newplayer" exact element={<NewPlayer/>} />
+          <Route path="/new" exact element={<NewPlayer/>} />
+          <Route path="/edit" exact element={<EditPlayer/>} />
           <Route path="/" exact element={<ListPlayers  customer={customers} />} />
       </Routes>
       <Footer/>
@@ -42,7 +44,7 @@ const Header = () => {
     <>
       <div className='menu'> 
             <Link to="/"> <MdViewList /> Players List </Link>
-            <Link to="/newplayer"><MdPlaylistAdd/> New Player </Link> 
+            <Link to="/new"><MdPlaylistAdd/> New Player </Link> 
       </div> 
       <hr />
 
