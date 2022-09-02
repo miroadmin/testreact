@@ -49,7 +49,7 @@ const ListPlayers = (props) => {
                             <span> {line.ContactNumber} </span>
                             <span> {line.CampaignName} </span>
                             <span> {line.Sessions } </span>
-                            <span> <Link to="/edit" state={{customer:props.customers,key:key,}}><FaRegEdit /*onMouseEnter={changeIcon}*/ /></Link>  </span>
+                           <span> <Link to="/edit" state={{customer:line,key:key}}><FaRegEdit /></Link>  </span> 
                             <span> {<RiDeleteBin6Line  onClick={() => DeleteLine(key)}/> } </span>
 
                         </div>
