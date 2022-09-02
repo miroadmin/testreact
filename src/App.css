@@ -20,14 +20,6 @@ header {
   vertical-align: middle;
 }
 
-.body1 {
-  display:block;
-  background-color: rgb(247, 241, 243);
-  text-align: center;
-  background: #d68585;
-}
-
-
 .footer {
     display: block;
     margin-top: 20px;
