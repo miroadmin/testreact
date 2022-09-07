@@ -1,26 +1,39 @@
 import React , { useState, useEffect } from 'react';
-import {Link, useLocation} from 'react-router-dom';
-
-import {FaRegEdit} from "react-icons/fa";
-import {RiArrowGoBackFill} from "react-icons/ri";
-import {HiSave} from "react-icons/hi";
+import Button from '@mui/material/Button';
 import './editplayer.css';
 
 
-const EditPlayer = () => {
-    const location=useLocation();
-    const [firstName, setFirstName] = useState(location.state.customer.FirstName);
-    const [lastName, setLastName] = useState(location.state.customer.LastName);
-    const [contactNumber, setContactNumber] = useState(location.state.customer.ContactNumber);
-    const [campaignName, setCampaignName] = useState(location.state.customer.CampaignName);
-    const [sessions, setSessions] = useState(location.state.customer.Sessions);
+const EditPlayer = (props) => {
 
-    const save = (event) => {
-      <Link to="/" ><HiSave /> Submit </Link>
-      // event.preventDefault();
-      // createUser();
+    const [modif, setModif] = useState(false);
+    const [firstName, setFirstName] = useState(props.customer.FirstName);
+    const [lastName, setLastName] = useState(props.customer.LastName);
+    const [contactNumber, setContactNumber] = useState(props.customer.ContactNumber);
+    const [campaignName, setCampaignName] = useState(props.customer.CampaignName);
+    const [sessions, setSessions] = useState(props.customer.Sessions);
+    const key = props.key;
+
+    useEffect(() => {  
+      if (modif)  
+        {
+          props.players.splice(key,1);
+          console.log(props.players);
+        }
+    },[modif])
+    
+    const save = () => {
+      if (firstName===props.customer.FirstName  && lastName===props.customer.LastName && 
+        contactNumber===props.customer.ContactNumber && campaignName===props.customer.CampaignName && 
+          sessions === props.customer.Sessions)
+          {
+            return 1
+          }
+          else
+          { 
+            setModif(true);
+        }
     }
-
+    alert('tady')
     return (
       <>
         <div className='container'>
@@ -74,8 +87,7 @@ const EditPlayer = () => {
                         <option value=""></option>
                     </select>  
                 </div>
-                <button type='submit'>Submit</button>
-                {/* <button onClick={save}>Submit</button> */}
+                <Button  style={{marginLeft:'200px'}} type='submit' variant="contained" color="success" size="large">Submit</Button>
             </form>
         </div>    
       </>

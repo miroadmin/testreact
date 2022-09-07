@@ -1,11 +1,10 @@
 import {Routes, Route, Link, BrowserRouter} from 'react-router-dom';
 import NewPlayer from "./components/newplayer";
-import EditPlayer from "./components/editplayer";
-import ListPlayers from "./components/playerslist";
+import Home from "./components/home";
 import {MdViewList, MdPlaylistAdd } from "react-icons/md";
 import './App.css';
 
-var customers =  [{FirstName: 'Joe', LastName: 'Caputo', ContactNumber: '07658312387', CampaignName: 'Black Rain', Sessions: 'Black Rain'},
+let customers =  [{FirstName: 'Joe', LastName: 'Caputo', ContactNumber: '07658312387', CampaignName: 'Black Rain', Sessions: 'Black Rain'},
 {FirstName: 'Piper', LastName: 'Chapman', ContactNumber: '07142548798', CampaignName: 'Black Rain', Sessions: 'One Last Riddle'},
 {FirstName: 'Tasha', LastName: 'Jefferson', ContactNumber: '07998987220', CampaignName: 'Black Rain', Sessions: 'The Burning Plague'},
 {FirstName: 'Gloria', LastName: 'Mendoza', ContactNumber: '07512645873', CampaignName: 'Black Rain', Sessions: 'The Sea Witch'},
@@ -50,8 +49,8 @@ const SelectionMode = () => {
       <Header/>
       <Routes>
           <Route path="/new" exact element={<NewPlayer/>} />
-          <Route path="/edit" exact element={<EditPlayer/>} />
-          <Route path="/" exact element={<ListPlayers  customer={customers} />} />
+          <Route path="/" exact element={<Home  players={customers} />} />
+          <Route path="*" element={<NoPage />} />
       </Routes>
       <Footer/>
     </div>
@@ -81,6 +80,9 @@ const Footer = () => {
   )
 }
 
+const NoPage = () => {
+  return <h1>404</h1>;
+};
 
 
 export default App;
