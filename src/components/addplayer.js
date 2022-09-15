@@ -3,27 +3,41 @@ import Button from '@mui/material/Button';
 import './editplayer.css';
 
 
-const EditPlayer = (props) => {
-    const [firstName, setFirstName] = useState(props.player.FirstName);
-    const [lastName, setLastName] = useState(props.player.LastName);
-    const [contactNumber, setContactNumber] = useState(props.player.ContactNumber);
-    const [campaignName, setCampaignName] = useState(props.player.CampaignName);
-    const [sessions, setSessions] = useState(props.player.Sessions);
-    const key = props.kluc;
+const AddPlayer = (props) => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [contactNumber, setContactNumber] = useState('');
+    const [campaignName, setCampaignName] = useState('');
+    const [sessions, setSessions] = useState('');
+    // const [customers,setCustomers] = useState(props.customers)
+
+    const add = () => {
+        console.log('pred',props.customers)
+        props.setCustomers((prevState) => ([
+            ...prevState,
+            {
+                FirstName: "firstName",
+                LastName: "lastName",
+                ContactNumber: "contactNumber",
+                CampaignName: "campaignName",
+                Sessions: "sessions",
+                // FirstName: firstName,
+                // LastName: lastName,
+                // ContactNumber: contactNumber,
+                // CampaignName: campaignName,
+                // Sessions: sessions,
+            },
+        ]));
+        console.log('po add',props.customers)
+        // props.setCustomers(customers)
+        alert('sss')
+    };
     
-    const save = () => {
-      if (!(firstName===props.player.FirstName)  || !(lastName===props.player.LastName) || 
-        !(contactNumber===props.player.ContactNumber) || !(campaignName===props.player.CampaignName) || 
-          !(sessions === props.player.Sessions) )
-          { 
-            // setModif(true);
-        }
-    }
 
     return (
       <>
         <div className='container'>
-            <form onSubmit={save}>
+            <form onSubmit={add}>
                 <div className='form_element'>
                     <label>First Name</label>
                     <input 
@@ -80,4 +94,4 @@ const EditPlayer = (props) => {
     )
 }
 
-export default EditPlayer;
+export default AddPlayer;
