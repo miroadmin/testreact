@@ -1,3 +1,4 @@
+import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import Players from "./components/players";
 import './App.css';
 
@@ -7,7 +8,11 @@ function App() {
   return (
     <>
       <Header/>
-      <Players/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" exact element={<Players />} />
+        </Routes>
+      </BrowserRouter>
       <Footer/>
     </>
 

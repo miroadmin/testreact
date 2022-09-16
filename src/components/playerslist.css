@@ -1,7 +1,7 @@
 .title  {
     display: grid;
     width:100%;
-    grid-template-columns: 150px 150px 200px 200px 200px 20px;
+    grid-template-columns: 250px 250px 200px 200px 200px 20px;
     grid-gap: 10px;
     margin-left: 10px;
     vertical-align: middle;
@@ -13,7 +13,7 @@
     display: grid;
     grid: row;    
     width:100%;
-    grid-template-columns: 150px 150px 200px 200px 200px 20px 20px;
+    grid-template-columns: 250px 250px 200px 200px 200px 20px 20px;
     grid-gap: 10px;
     margin-left: 10px;
     vertical-align: middle;

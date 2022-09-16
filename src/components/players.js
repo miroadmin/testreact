@@ -1,13 +1,9 @@
 import React , { useState, useEffect } from 'react';
-// import EditPlayer from './editplayer';
+
 import Button from '@mui/material/Button';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
-// import AddPlayer from './addplayer';
-
-
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {FaRegEdit} from "react-icons/fa";
-
 import './playerslist.css';
 
 const players = 
@@ -43,32 +39,45 @@ const Players = () => {
     const [key, setKey] = useState('');
     const [del, setDel] = useState(false);
     
-    /************************************************************************************** */
+    /****************************** ADD PLAYER******************************************************** */
+    const addLine  = () => {
+        setFlag("add");
+    }  
+
     const AddPlayer = () => {
         const [firstName, setFirstName] = useState('');
         const [lastName, setLastName] = useState('');
         const [contactNumber, setContactNumber] = useState('');
         const [campaignName, setCampaignName] = useState('');
         const [sessions, setSessions] = useState('');
-        // setFirstName("");
-        // setLastName("");
-        // setContactNumber("");
-        // setCampaignName("");
-        // setSessions("");
 
         
+        
+        
+        /*      ADD PLAYER           */
         const add = () => {
+
+            /*       DUPLICATE PLAYER           */
+            let test = customers.filter((player => firstName===player.FirstName && (lastName===player.LastName) &&
+                (contactNumber===player.ContactNumber) && (campaignName===player.CampaignName) && 
+                (sessions === player.Sessions) ) ).map((filterplayer) => {
+                        return(filterplayer)
+            });
+            
+            if (test.length > 0)  {
+                alert('Just so you know, you already have this player in the database with this game!')
+            }
             setCustomers((prevState) => ([
-                ...prevState,
-                {
-                    FirstName: firstName,
-                    LastName: lastName,
-                    ContactNumber: contactNumber,
-                    CampaignName: campaignName,
-                    Sessions: sessions,
-                },
-            ]));
-            setFlag("list")
+                    ...prevState,
+                    {
+                        FirstName: firstName,
+                        LastName: lastName,
+                        ContactNumber: contactNumber,
+                        CampaignName: campaignName,
+                        Sessions: sessions,
+                    },
+                ]));
+                setFlag("list")
         };
         
     
@@ -131,8 +140,8 @@ const Players = () => {
           </>
         )
     }
-/**************************************************************************************************** */
-    
+/*************************************DELETE PLAYER*************************************************************** */
+
     const deleteLine  = (keey) => {
         const r = window.confirm('Are you sure you wish to delete this player');
         if (r) {             
@@ -145,8 +154,14 @@ const Players = () => {
         if (del)  
             customers.splice(key,1);
         setDel(false);
-    }, [del, customers])
-/**************************************************************************************** */
+    }, [del, key, customers])
+
+/***********************************EDIT PLAYER***************************************************** */
+const editLine  = (key,line) => {
+    setFlag("edit");
+    setPlayer(line);
+    setKey(key);
+}  
 
 const EditPlayer = () => {
     const [firstName, setFirstName] = useState(player.FirstName);
@@ -154,12 +169,6 @@ const EditPlayer = () => {
     const [contactNumber, setContactNumber] = useState(player.ContactNumber);
     const [campaignName, setCampaignName] = useState(player.CampaignName);
     const [sessions, setSessions] = useState(player.Sessions);
-    // setFirstName(player.FirstName);
-    // setLastName(player.LastName);
-    // setContactNumber(player.ContactNumber);
-    // setCampaignName(player.CampaignName);
-    // setSessions(player.Sessions);
-    // const key = kluc;
     
     const save = () => {
       if (!(firstName===player.FirstName)  || !(lastName===player.LastName) || 
@@ -242,20 +251,7 @@ const EditPlayer = () => {
       </>
     )
 }
-/**************************************************************************************** */
-
-
-    const editLine  = (key,line) => {
-        setFlag("edit");
-        setPlayer(line);
-        setKey(key);
-    }  
-
-    const addLine  = () => {
-        setFlag("add");
-    }  
-    console.log('po:',customers);
-
+/********************************MAIN******************************************************** */
     if (flag==='edit') {
         return (
             <span>
