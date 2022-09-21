@@ -4,40 +4,26 @@ import Button from '@mui/material/Button';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {FaRegEdit} from "react-icons/fa";
-import './players.css';
+import SortIcon from '@mui/icons-material/Sort';
+import './playerstable.css';
+var by = require('sortby');
 
-// const playersss = 
-// [{FirstName: 'Joe', LastName: 'Caputo', ContactNumber: '07658312387', CampaignName: 'Black Rain', Sessions: 'Black Rain'},
-// {FirstName: 'Piper', LastName: 'Chapman', ContactNumber: '07142548798', CampaignName: 'Black Rain', Sessions: 'One Last Riddle'},
-// {FirstName: 'Tasha', LastName: 'Jefferson', ContactNumber: '07998987220', CampaignName: 'Black Rain', Sessions: 'The Burning Plague'},
-// {FirstName: 'Gloria', LastName: 'Mendoza', ContactNumber: '07512645873', CampaignName: 'Black Rain', Sessions: 'The Sea Witch'},
-// {FirstName: 'Theodore', LastName: 'Bagwell', ContactNumber: '07561384896', CampaignName: 'One Last Riddle', Sessions: 'Tomb of Horrors'},
-// {FirstName: 'Brad', LastName: 'Bellick', ContactNumber: '07883256418', CampaignName: 'One Last Riddle',Sessions: ''},
-// {FirstName: 'Lincoln', LastName: 'Burrows', ContactNumber: '07112356983', CampaignName: 'One Last Riddle',Sessions: ''},
-// {FirstName: 'Fernando', LastName: 'Sucre', ContactNumber: '07963212321', CampaignName: 'One Last Riddle',Sessions: ''},
-// {FirstName: 'Sara', LastName: 'Tancredi', ContactNumber: '07954186684', CampaignName: 'One Last Riddle',Sessions: ''},
-// {FirstName: 'Daryl', LastName: 'Dixon', ContactNumber: '07325649845', CampaignName: 'The Burning Plague',Sessions: ''},
-// {FirstName: 'Maggie', LastName: 'Greene', ContactNumber: '07459832185', CampaignName: 'The Burning Plague',Sessions: ''},
-// {FirstName: 'Carol', LastName: 'Peletier', ContactNumber: '07989444568', CampaignName: 'The Burning Plague',Sessions: ''},
-// {FirstName: 'Eugene', LastName: 'Porter', ContactNumber: '07774854987', CampaignName: 'The Burning Plague',Sessions: ''},
-// {FirstName: 'Billy', LastName: 'Cranston', ContactNumber: '007845222547', CampaignName: 'The Sea Witch',Sessions: ''},
-// {FirstName: 'Kimberly', LastName: 'Hart', ContactNumber: '07815307459', CampaignName: 'The Sea Witch',Sessions: ''},
-// {FirstName: 'Trini', LastName: 'Kwan', ContactNumber: '07548755285', CampaignName: 'The Sea Witch',Sessions: ''},
-// {FirstName: 'Tommy', LastName: 'Oliver', ContactNumber: '07989444568', CampaignName: 'The Sea Witch',Sessions: ''},
-// {FirstName: 'Jason', LastName: 'Scott', ContactNumber: '07774854987', CampaignName: 'The Sea Witch',Sessions: ''},
-// {FirstName: 'Zack', LastName: 'Taylor', ContactNumber: '07845222547', CampaignName: 'The Sea Witch',Sessions: ''},
-// {FirstName: 'Joyce', LastName: 'Byers', ContactNumber: '07954668187', CampaignName: 'Tomb of Horrors',Sessions: ''},
-// {FirstName: 'Dustin', LastName: 'Henderson', ContactNumber: '07889554857', CampaignName: 'Tomb of Horrors',Sessions: ''},
-// {FirstName: 'Jim', LastName: 'Hopper', ContactNumber: '07954845148', CampaignName: 'Tomb of Horrors',Sessions: ''},
-// {FirstName: 'Nancy', LastName: 'Wheeler', ContactNumber: '07445845711', CampaignName: 'Tomb of Horrors',Sessions: ''},
-// ];
+const columns = [
+    { label: "First Name", accessor: "FirstName", sortable: true },
+    { label: "Last Name", accessor: "LastName", sortable: true },
+    { label: "Telephone", accessor: "ContactNumber", sortable: true },
+    { label: "Campaign Name", accessor: "CampaignName", sortable: true },
+    { label: "Sessions", accessor: "Sessions", sortable: true },
+   ];
 
-const Players = (props) => {
+const PlayersTable = (props) => {
     const [flag, setFlag] = useState('list');
     const [customers, setCustomers] = useState(props.players);
     const [player, setPlayer] = useState('');
     const [key, setKey] = useState('');
     const [del, setDel] = useState(false);
+    const [sort, setSort] = useState(customers);
+    const [sortHelp, setSortHelp] = useState(0);
 
     
 
@@ -257,6 +243,27 @@ const EditPlayer = () => {
     )
 }
 
+    
+    const changeSort = (flag) => {
+        setSortHelp(flag)
+    }
+
+    useEffect(() => {  
+        switch (sortHelp){
+            case 1: 
+                setSort(customers.sort(by({LastName: 1, FirstName: 1})));
+                break;
+            case 2: 
+                setSort(customers.sort(by({CampaignName: 1, LastName: 1})));
+                break;            
+            case 3: 
+                setSort(customers.sort(by({Sessions: 1, LastName: 1})));
+                break;
+            default:
+                setSort(customers);
+        }
+
+    }, [sortHelp, sort, customers]);
 /********************************MAIN******************************************************** */
     if (flag==='edit') {
         return (
@@ -276,19 +283,23 @@ const EditPlayer = () => {
 
         return (
             <div>
-                <div className='title'>
+                <div className='titleTable'>
                     <span>First Name</span>
                     <span>Last Name</span>
+                    <SortIcon  style={{fontSize: '20px', color: 'rgb(2, 2, 118)'}} onClick={ () => changeSort(1)}/>
                     <span>Contact Number</span>
                     <span>Campaign Name</span>
+                    <SortIcon  style={{fontSize: '20px', color: 'rgb(2, 2, 118)'}} onClick={ () => changeSort(2)}/>
                     <span>Session</span>
+                    <SortIcon  style={{fontSize: '20px', color: 'rgb(2, 2, 118)'}} onClick={ () => changeSort(3)}/>
                     <AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/> 
                 </div>
                 <hr/>
                 <div>
-                    {customers.map((line,id) => {
+                    {sort.map((line,id) => {
                         return (
-                            <div key={id} className='list'> 
+                            <div key={id} className='listTable'> 
+                
                                 <span> {line.FirstName} </span>
                                 <span> {line.LastName} </span>
                                 <span> {line.ContactNumber} </span>
@@ -306,4 +317,4 @@ const EditPlayer = () => {
     }
 }
 
-export default Players;
+export default PlayersTable;

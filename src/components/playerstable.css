@@ -1,24 +1,40 @@
-.title  {
+.titleTable  {
     display: grid;
-    width:100%;
-    grid-template-columns: 250px 250px 200px 200px 200px 20px;
-    grid-gap: 10px;
-    margin-left: 10px;
+    width:1095px;
+    grid-template-columns: 250px 250px 200px 230px 195px 50px;
+    text-align: left;
+    /* grid-gap: 10px; */
+    /* margin-left: 10px; */
     vertical-align: middle;
     color:rgb(2, 2, 118);
     font-style: oblique;
+    font-size: 20px;
     /* text-decoration-line: underline; */
 }
-.list {
+.listTable {
     display: grid;
     grid: row;    
     width:100%;
-    grid-template-columns: 250px 250px 200px 200px 200px 20px 20px;
-    grid-gap: 10px;
-    margin-left: 10px;
+    grid-template-columns: 250px 250px 200px 230px 200px 40px 30px;
+    /* grid-gap: 10px; */
+    /* margin-left: 10px; */
     vertical-align: middle;
     color:rgb(2, 2, 118);
 }
+
+th {
+    border: 1px solid #dddddd;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+  }
+  
+tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
 .changeColor {
     color:blueviolet;
 }

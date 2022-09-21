@@ -1,12 +1,26 @@
 header {
+  display:flex;
+  justify-content:space-between;
   height: 40px;
   width:100%;
   border-bottom: 1px solid #b6b6b6;
   box-sizing: border-box;
   background: #d68585;
   margin-bottom: 10px;
-  text-align: center;
+  vertical-align: middle;
+
+}
+
+.titleHeader {
+  text-align: left;
   font-size: 25px;
+}
+.titleButton {
+  text-align: right;
+  height: 15px;
+  font-size: 15px;
+  padding-top: 10px;
+  margin-right:10px;
 }
 
 .menu {
