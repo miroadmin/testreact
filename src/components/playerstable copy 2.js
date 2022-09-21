@@ -4,9 +4,17 @@ import Button from '@mui/material/Button';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {FaRegEdit} from "react-icons/fa";
-import './players.css';
+import './playerstable.css';
 
-const Players = (props) => {
+const columns = [
+    { label: "First Name"},
+    { label: "Last Name"},
+    { label: "Telephone" },
+    { label: "Campaign Name"},
+    { label: "Sessions"},
+   ];
+
+const PlayersTable = (props) => {
     const [flag, setFlag] = useState('list');
     const [customers, setCustomers] = useState(props.players);
     const [player, setPlayer] = useState('');
@@ -250,34 +258,36 @@ const EditPlayer = () => {
 
         return (
             <div>
-                <div className='title'>
-                    <span>First Name</span>
-                    <span>Last Name</span>
-                    <span>Contact Number</span>
-                    <span>Campaign Name</span>
-                    <span>Session</span>
-                    <AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/> 
-                </div>
-                <hr/>
-                <div>
-                    {customers.map((line,id) => {
+                <table >
+                    <tr className='titleTable'>
+                        {columns.map(({ label, id}) => {
+                            return (
+                            <th key={id} > {label} </th>
+                            );
+                        })}
+                        <span>
+                            <AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/> 
+                        </span>
+                    </tr>
+                    <div>
+                    {sort.map((line,id) => {
                         return (
-                            <div key={id} className='list'> 
-                                <span> {line.FirstName} </span>
-                                <span> {line.LastName} </span>
-                                <span> {line.ContactNumber} </span>
-                                <span> {line.CampaignName} </span>
-                                <span> {line.Sessions } </span>
-                                <FaRegEdit  style={{fontSize: '20px', color: 'rgb(118, 2, 4)'}} onClick={() => editLine(id, line)}/>
-                                <RiDeleteBin6Line  style={{fontSize: '20px', color: 'rgb(118, 2, 4)'}} onClick={() => deleteLine(id)}/> 
-                            </div>
+                                <tr  key={id} className='listTable'>
+                                    <td> {line.FirstName} </td>
+                                    <td> {line.LastName} </td>
+                                    <td> {line.ContactNumber} </td>
+                                    <td> {line.CampaignName} </td>
+                                    <td> {line.Sessions } </td>
+                                    <FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => editLine(id, line)}/>
+                                    <RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => deleteLine(id)}/>
+                                </tr> 
                         )
                     })}
-                </div>   
-                <hr/>
-            </div>
+                    </div>   
+                </table>
+                </div>
         )
     }
 }
 
-export default Players;
+export default PlayersTable;

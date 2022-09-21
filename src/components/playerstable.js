@@ -4,17 +4,7 @@ import Button from '@mui/material/Button';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {FaRegEdit} from "react-icons/fa";
-import SortIcon from '@mui/icons-material/Sort';
 import './playerstable.css';
-var by = require('sortby');
-
-const columns = [
-    { label: "First Name", accessor: "FirstName", sortable: true },
-    { label: "Last Name", accessor: "LastName", sortable: true },
-    { label: "Telephone", accessor: "ContactNumber", sortable: true },
-    { label: "Campaign Name", accessor: "CampaignName", sortable: true },
-    { label: "Sessions", accessor: "Sessions", sortable: true },
-   ];
 
 const PlayersTable = (props) => {
     const [flag, setFlag] = useState('list');
@@ -22,10 +12,6 @@ const PlayersTable = (props) => {
     const [player, setPlayer] = useState('');
     const [key, setKey] = useState('');
     const [del, setDel] = useState(false);
-    const [sort, setSort] = useState(customers);
-    const [sortHelp, setSortHelp] = useState(0);
-
-    
 
     /****************************** ADD PLAYER******************************************************** */
     const addLine  = () => {
@@ -243,27 +229,6 @@ const EditPlayer = () => {
     )
 }
 
-    
-    const changeSort = (flag) => {
-        setSortHelp(flag)
-    }
-
-    useEffect(() => {  
-        switch (sortHelp){
-            case 1: 
-                setSort(customers.sort(by({LastName: 1, FirstName: 1})));
-                break;
-            case 2: 
-                setSort(customers.sort(by({CampaignName: 1, LastName: 1})));
-                break;            
-            case 3: 
-                setSort(customers.sort(by({Sessions: 1, LastName: 1})));
-                break;
-            default:
-                setSort(customers);
-        }
-
-    }, [sortHelp, sort, customers]);
 /********************************MAIN******************************************************** */
     if (flag==='edit') {
         return (
@@ -282,42 +247,33 @@ const EditPlayer = () => {
     else    {
 
         return (
-            <div>
-                <table >
+            <table>
+                <thead >
                     <tr className='titleTable'>
-                        {columns.map(({ label, accessor, sortable }) => {
-                            return (
-                            <th
-                                key={accessor}
-                                // onClick={sortable ? () => handleSortingChange(accessor) : null}
-                            >
-                            {label}
-                            </th>
-                            );
-                        })}
-                        <span>
-                            <AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/> 
-                        </span>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Telephone</th>
+                        <th>Campaign Name</th>
+                        <th>Sessions</th>
+                        <th><AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/></th>
                     </tr>
-                    {/* <hr style={{width: '100%'}}/> */}
-                    <div>
-                    {sort.map((line,id) => {
+                </thead>
+                <tbody>
+                    {customers.map((line,id) => {
                         return (
-                                <tr  key={id} className='listTable'>
+                                <tr key={id} className='listTable'>
                                     <td> {line.FirstName} </td>
                                     <td> {line.LastName} </td>
                                     <td> {line.ContactNumber} </td>
                                     <td> {line.CampaignName} </td>
                                     <td> {line.Sessions } </td>
-                                    <FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => editLine(id, line)}/>
-                                    <RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => deleteLine(id)}/>
+                                    <td><FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => editLine(id, line)}/></td>
+                                    <td><RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => deleteLine(id)}/></td>
                                 </tr> 
                         )
                     })}
-                    </div>   
-                </table>
-                {/* <hr style={{width: '100%'}}/> */}
-                </div>
+                </tbody>
+        </table>
         )
     }
 }
