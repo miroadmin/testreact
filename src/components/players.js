@@ -1,4 +1,6 @@
 import React , { useState, useEffect } from 'react';
+import {useSelector, useDispatch} from "react-redux";
+import {inser, delet, modif} from './users';
 
 import Button from '@mui/material/Button';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
@@ -6,9 +8,12 @@ import {RiDeleteBin6Line} from "react-icons/ri";
 import {FaRegEdit} from "react-icons/fa";
 import './players.css';
 
-const Players = (props) => {
+const Players = () => {
+    const players = useSelector((state) => state.players.value);
+    console.log(players)
+    const dispatch = useDispatch()
     const [flag, setFlag] = useState('list');
-    const [customers, setCustomers] = useState(props.players);
+    const [customers, setCustomers] = useState(players);
     const [player, setPlayer] = useState('');
     const [key, setKey] = useState('');
     const [del, setDel] = useState(false);
@@ -129,6 +134,7 @@ const Players = (props) => {
 
     useEffect(() => {  
         if (del)  
+            // dispatch(del ({FirstName: firstName, LastName: lastName, ContactNumber: contactNumber, CampaignName: campaignName, Sessions: sessions}));
             customers.splice(key,1);
         setDel(false);
     }, [del, key, customers])
@@ -154,19 +160,21 @@ const EditPlayer = () => {
         !(contactNumber===player.ContactNumber) || !(campaignName===player.CampaignName) || 
           !(sessions === player.Sessions) )
           { 
-            setCustomers(
-                customers.map((customer,id) =>
-                    id === key
-                        ? { ...customer, 
-                                    FirstName: firstName,
-                                    LastName: lastName,
-                                    ContactNumber: contactNumber,
-                                    CampaignName: campaignName,
-                                    Sessions: sessions
-                            }
-                        : { ...customer }
-                )
-            );
+            dispatch(modif ({FirstName: firstName, LastName: lastName, ContactNumber: contactNumber, CampaignName: campaignName, Sessions: sessions}));
+
+            // setCustomers(
+            //     customers.map((customer,id) =>
+            //         id === key
+            //             ? { ...customer, 
+            //                         FirstName: firstName,
+            //                         LastName: lastName,
+            //                         ContactNumber: contactNumber,
+            //                         CampaignName: campaignName,
+            //                         Sessions: sessions
+            //                 }
+            //             : { ...customer }
+            //     )
+            // );
         }
         setFlag("list")
     }

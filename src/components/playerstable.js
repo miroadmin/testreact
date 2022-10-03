@@ -1,17 +1,24 @@
 import React , { useState, useEffect } from 'react';
+import {useSelector, useDispatch} from "react-redux";
+import {inser, delet, modif} from './users';
+
 
 import Button from '@mui/material/Button';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import SearchIcon from '@mui/icons-material/Search';
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {FaRegEdit} from "react-icons/fa";
 import './playerstable.css';
 
-const PlayersTable = (props) => {
+const PlayersTable = () => {
+    const customers = useSelector((state) => state.players.clients);
+    const dispatch = useDispatch()
     const [flag, setFlag] = useState('list');
-    const [customers, setCustomers] = useState(props.players);
+    // const [customers, setCustomers] = useState(players);
     const [player, setPlayer] = useState('');
     const [key, setKey] = useState('');
     const [del, setDel] = useState(false);
+    const [session, setSession] = useState('');
 
     /****************************** ADD PLAYER******************************************************** */
     const addLine  = () => {
@@ -41,17 +48,11 @@ const PlayersTable = (props) => {
             if (test.length > 0)  {
                 alert('Just so you know, you already have this player in the database with this game!')
             }
-
-            setCustomers((prevState) => ([
-                    ...prevState,
-                    {
-                        FirstName: firstName,
-                        LastName: lastName,
-                        ContactNumber: contactNumber,
-                        CampaignName: campaignName,
-                        Sessions: sessions,
-                    },
-                ]));
+            dispatch(inser({FirstName: firstName,
+                            LastName: lastName,
+                            ContactNumber: contactNumber,
+                            CampaignName: campaignName,
+                            Sessions: sessions,}));
                 setFlag("list")
         };
         
@@ -117,28 +118,20 @@ const PlayersTable = (props) => {
     }
 /*************************************DELETE PLAYER*************************************************************** */
 
-    const deleteLine  = (keey) => {
-        const r = window.confirm('Are you sure you wish to delete this player');
-        if (r) {             
-            setDel(true);
-            setKey(keey);
+    const deleteLine  = (key) => {
+        const answer = window.confirm('Are you sure you wish to delete this player');
+        if (answer) {             
+            dispatch( delet(key));
         }
     }  
 
-    useEffect(() => {  
-        if (del)  
-            customers.splice(key,1);
-        setDel(false);
-    }, [del, key, customers])
-
-
 
 /***********************************EDIT PLAYER***************************************************** */
-const editLine  = (key,line) => {
-    setFlag("edit");
-    setPlayer(line);
-    setKey(key);
-}  
+    const editLine  = (key,line) => {
+        setFlag("edit");
+        setPlayer(line);
+        setKey(key);
+    }  
 
 const EditPlayer = () => {
     const [firstName, setFirstName] = useState(player.FirstName);
@@ -148,25 +141,14 @@ const EditPlayer = () => {
     const [sessions, setSessions] = useState(player.Sessions);
     
     const save = () => {
-      if (!(firstName===player.FirstName)  || !(lastName===player.LastName) || 
-        !(contactNumber===player.ContactNumber) || !(campaignName===player.CampaignName) || 
-          !(sessions === player.Sessions) )
-          { 
-            setCustomers(
-                customers.map((customer,id) =>
-                    id === key
-                        ? { ...customer, 
-                                    FirstName: firstName,
-                                    LastName: lastName,
-                                    ContactNumber: contactNumber,
-                                    CampaignName: campaignName,
-                                    Sessions: sessions
-                            }
-                        : { ...customer }
-                )
-            );
-        }
-        setFlag("list")
+        if (!(firstName===player.FirstName)  || !(lastName===player.LastName) || 
+            !(contactNumber===player.ContactNumber) || !(campaignName===player.CampaignName) || 
+            !(sessions === player.Sessions) )
+            { 
+                // dispatch( modif({FirstName: firstName, LastName: lastName, ContactNumber: contactNumber, CampaignName: campaignName, Sessions: sessions, key}))
+                dispatch( modif({FirstName: firstName, LastName: lastName, ContactNumber: contactNumber, CampaignName: campaignName, Sessions: sessions, key}))
+            }
+        setFlag("list");
     }
 
     return (
@@ -233,15 +215,13 @@ const EditPlayer = () => {
     if (flag==='edit') {
         return (
             <span>
-                <EditPlayer kluc={key} player={player} customer={customers}/>
+                <EditPlayer  />
             </span>   
             )
         }
     else if (flag==='add') {
             return (
-                <span>
-                <AddPlayer customers={customers} setCustomers={setCustomers}/>
-            </span>
+                <span> <AddPlayer /> </span>
         )
     }
     else    {
@@ -256,10 +236,26 @@ const EditPlayer = () => {
                         <th>Campaign Name</th>
                         <th>Sessions</th>
                         <th><AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/></th>
+                        <th className='th1'></th>
+                        <th className='th1'></th>
+                        <th className='th1'></th>
+                        <th className='th1'></th>
+                        <th className='th2' >   
+                                <select value={session} style={{fontSize: '20px', width: '245px', paddingTop:'3px'}}
+                                    onChange={(e) => setSession(e.target.value)}>
+                                        <option value="Black Rain">Black Rain</option>
+                                        <option value="One Last Riddle">One Last Riddle</option>
+                                        <option value="The Burning Plague">The Burning Plague</option>
+                                        <option value="The Sea Witch">The Sea Witch</option>
+                                        <option value="Tomb of Horrors">Tomb of Horrors</option>
+                                        <option value=""></option>
+                                </select>  
+                        </th>
+                        <th className='th3' ><SearchIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} /></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {customers.map((line,id) => {
+                    {customers.filter(section => section.Sessions.includes(session)).map((line,id) => {
                         return (
                                 <tr key={id} className='listTable'>
                                     <td> {line.FirstName} </td>
@@ -267,8 +263,8 @@ const EditPlayer = () => {
                                     <td> {line.ContactNumber} </td>
                                     <td> {line.CampaignName} </td>
                                     <td> {line.Sessions } </td>
-                                    <td><FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => editLine(id, line)}/></td>
-                                    <td><RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => deleteLine(id)}/></td>
+                                    <td><FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => editLine(id, line)}/></td>
+                                    <td><RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => deleteLine(id)}/></td>
                                 </tr> 
                         )
                     })}
