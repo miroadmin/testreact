@@ -1,24 +1,46 @@
 import React , { useState, useEffect } from 'react';
-import {useSelector, useDispatch} from "react-redux";
-import {inser, delet, modif} from './users';
-
+import {players} from "./redux.stories";
 import Button from '@mui/material/Button';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {FaRegEdit} from "react-icons/fa";
-import './players.css';
+import './playerstable.css';
+
+const columns = [
+    { label: "First Name"},
+    { label: "Last Name"},
+    { label: "Telephone" },
+    { label: "Campaign Name"},
+    { label: "Sessions"},
+   ];
 
 const Players = () => {
-    const players = useSelector((state) => state.players.value);
-    console.log(players)
-    const dispatch = useDispatch()
     const [flag, setFlag] = useState('list');
     const [customers, setCustomers] = useState(players);
     const [player, setPlayer] = useState('');
     const [key, setKey] = useState('');
     const [del, setDel] = useState(false);
+    const [session, setSession] = useState('');
 
-    
+  /*************************************DELETE PLAYER*************************************************************** */
+
+    const deleteLine  = (keey) => {
+        const r = window.confirm('Are you sure you wish to delete this player');
+            if (r) {             
+                setDel(true);
+                setKey(keey);
+            }
+        }  
+        
+    useEffect(() => {  
+            if (del)  {
+                var dupl = [...customers];
+                dupl.splice(key,1)
+                setCustomers(dupl)
+        }
+        setDel(false);
+    }, [del, key, customers])
+
 
     /****************************** ADD PLAYER******************************************************** */
     const addLine  = () => {
@@ -96,7 +118,7 @@ const Players = () => {
                         <select value={campaignName} 
                           onChange={(e) => setCampaignName(e.target.value)}>
                             <option value="Black Rain">Black Rain</option>
-                            <option value="One Last Riddle">Black Rain</option>
+                            <option value="One Last Riddle">One Last Riddle</option>
                             <option value="The Burning Plague">The Burning Plague</option>
                             <option value="The Sea Witch">The Sea Witch</option>
                             <option value="Tomb of Horrors">Tomb of Horrors</option>
@@ -122,25 +144,6 @@ const Players = () => {
           </>
         )
     }
-/*************************************DELETE PLAYER*************************************************************** */
-
-    const deleteLine  = (keey) => {
-        const r = window.confirm('Are you sure you wish to delete this player');
-        if (r) {             
-            setDel(true);
-            setKey(keey);
-        }
-    }  
-
-    useEffect(() => {  
-        if (del)  
-            // dispatch(del ({FirstName: firstName, LastName: lastName, ContactNumber: contactNumber, CampaignName: campaignName, Sessions: sessions}));
-            customers.splice(key,1);
-        setDel(false);
-    }, [del, key, customers])
-
-
-
 /***********************************EDIT PLAYER***************************************************** */
 const editLine  = (key,line) => {
     setFlag("edit");
@@ -160,21 +163,19 @@ const EditPlayer = () => {
         !(contactNumber===player.ContactNumber) || !(campaignName===player.CampaignName) || 
           !(sessions === player.Sessions) )
           { 
-            dispatch(modif ({FirstName: firstName, LastName: lastName, ContactNumber: contactNumber, CampaignName: campaignName, Sessions: sessions}));
-
-            // setCustomers(
-            //     customers.map((customer,id) =>
-            //         id === key
-            //             ? { ...customer, 
-            //                         FirstName: firstName,
-            //                         LastName: lastName,
-            //                         ContactNumber: contactNumber,
-            //                         CampaignName: campaignName,
-            //                         Sessions: sessions
-            //                 }
-            //             : { ...customer }
-            //     )
-            // );
+            setCustomers(
+                customers.map((customer,id) =>
+                    id === key
+                        ? { ...customer, 
+                                    FirstName: firstName,
+                                    LastName: lastName,
+                                    ContactNumber: contactNumber,
+                                    CampaignName: campaignName,
+                                    Sessions: sessions
+                            }
+                        : { ...customer }
+                )
+            );
         }
         setFlag("list")
     }
@@ -258,32 +259,49 @@ const EditPlayer = () => {
 
         return (
             <div>
-                <div className='title'>
-                    <span>First Name</span>
-                    <span>Last Name</span>
-                    <span>Contact Number</span>
-                    <span>Campaign Name</span>
-                    <span>Session</span>
-                    <AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/> 
-                </div>
-                <hr/>
-                <div>
-                    {customers.map((line,id) => {
+                <table >
+                    <tr className='titleTable'>
+                        {columns.map(({ label, id}) => {
+                            return (
+                            <th key={id} > {label} </th>
+                            );
+                        })}
+                        <span>
+                            <AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/> 
+                        </span>
+                        <th className='th1'></th>
+                        <th className='th1'></th>
+                        <th className='th1'></th>
+                        <th className='th1'></th>
+                        <th className='th2' >   
+                                <select value={session} style={{fontSize: '20px', width: '245px', paddingTop:'3px'}}
+                                    onChange={(e) => setSession(e.target.value)}>
+                                        <option value="Black Rain">Black Rain</option>
+                                        <option value="One Last Riddle">One Last Riddle</option>
+                                        <option value="The Burning Plague">The Burning Plague</option>
+                                        <option value="The Sea Witch">The Sea Witch</option>
+                                        <option value="Tomb of Horrors">Tomb of Horrors</option>
+                                        <option value=""></option>
+                                </select>  
+                        </th>
+                    </tr>
+                    <div>
+                    {customers.filter(section => section.Sessions.includes(session)).map((line,id) => {
                         return (
-                            <div key={id} className='list'> 
-                                <span> {line.FirstName} </span>
-                                <span> {line.LastName} </span>
-                                <span> {line.ContactNumber} </span>
-                                <span> {line.CampaignName} </span>
-                                <span> {line.Sessions } </span>
-                                <FaRegEdit  style={{fontSize: '20px', color: 'rgb(118, 2, 4)'}} onClick={() => editLine(id, line)}/>
-                                <RiDeleteBin6Line  style={{fontSize: '20px', color: 'rgb(118, 2, 4)'}} onClick={() => deleteLine(id)}/> 
-                            </div>
+                                <tr  key={id} className='listTable'>
+                                    <td> {line.FirstName} </td>
+                                    <td> {line.LastName} </td>
+                                    <td> {line.ContactNumber} </td>
+                                    <td> {line.CampaignName} </td>
+                                    <td> {line.Sessions } </td>
+                                    <FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => editLine(id, line)}/>
+                                    <RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)', height:'30px'}} onClick={() => deleteLine(id)}/>
+                                </tr> 
                         )
                     })}
-                </div>   
-                <hr/>
-            </div>
+                    </div>   
+                </table>
+                </div>
         )
     }
 }

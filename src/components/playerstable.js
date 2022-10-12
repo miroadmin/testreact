@@ -1,6 +1,7 @@
-import React , { useState, useEffect } from 'react';
+import React , { useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {inser, delet, modif} from './users';
+import {inser, delet, modif} from './redux.stories';
+import ViewPlayer from "./viewplayer";
 
 
 import Button from '@mui/material/Button';
@@ -14,11 +15,14 @@ const PlayersTable = () => {
     const customers = useSelector((state) => state.players.clients);
     const dispatch = useDispatch()
     const [flag, setFlag] = useState('list');
-    // const [customers, setCustomers] = useState(players);
     const [player, setPlayer] = useState('');
     const [key, setKey] = useState('');
-    const [del, setDel] = useState(false);
     const [session, setSession] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [contactNumber, setContactNumber] = useState('');
+    const [campaignName, setCampaignName] = useState('');
+    const [sessions, setSessions] = useState('');
 
     /****************************** ADD PLAYER******************************************************** */
     const addLine  = () => {
@@ -30,14 +34,10 @@ const PlayersTable = () => {
         const [lastName, setLastName] = useState('');
         const [contactNumber, setContactNumber] = useState('');
         const [campaignName, setCampaignName] = useState('');
-        const [sessions, setSessions] = useState('');
+        const [sessions, setSessions] = useState('');      
 
-        
-        
-        
         /*      ADD PLAYER           */
         const add = () => {
-
             /*       DUPLICATE PLAYER           */
             let test = customers.filter((player => firstName===player.FirstName && (lastName===player.LastName) &&
                 (contactNumber===player.ContactNumber) && (campaignName===player.CampaignName) && 
@@ -90,7 +90,7 @@ const PlayersTable = () => {
                         <select value={campaignName} 
                           onChange={(e) => setCampaignName(e.target.value)}>
                             <option value="Black Rain">Black Rain</option>
-                            <option value="One Last Riddle">Black Rain</option>
+                            <option value="One Last Riddle">One Last Riddle</option>
                             <option value="The Burning Plague">The Burning Plague</option>
                             <option value="The Sea Witch">The Sea Witch</option>
                             <option value="Tomb of Horrors">Tomb of Horrors</option>
@@ -145,7 +145,6 @@ const EditPlayer = () => {
             !(contactNumber===player.ContactNumber) || !(campaignName===player.CampaignName) || 
             !(sessions === player.Sessions) )
             { 
-                // dispatch( modif({FirstName: firstName, LastName: lastName, ContactNumber: contactNumber, CampaignName: campaignName, Sessions: sessions, key}))
                 dispatch( modif({FirstName: firstName, LastName: lastName, ContactNumber: contactNumber, CampaignName: campaignName, Sessions: sessions, key}))
             }
         setFlag("list");
@@ -211,6 +210,20 @@ const EditPlayer = () => {
     )
 }
 
+/********************************View******************************************************** */
+    const viewPlayer = (FirstName, LastName, ContactNumber, CampaignName, Sessions) => {
+        setFlag("view");
+        setFirstName(FirstName);
+        setLastName(LastName);
+        setContactNumber(ContactNumber);
+        setCampaignName(CampaignName);
+        setSessions(Sessions);
+    }
+    
+ const ViewCallBack = () => {
+        setFlag("list");
+    }
+
 /********************************MAIN******************************************************** */
     if (flag==='edit') {
         return (
@@ -223,6 +236,13 @@ const EditPlayer = () => {
             return (
                 <span> <AddPlayer /> </span>
         )
+    }
+    else if (flag==='view') {
+        return (
+            <>
+            <span> <ViewPlayer  FirstName={firstName}  LastName={lastName} ContactNumber={contactNumber} CampaignName={campaignName} Sessions={sessions} callBack={ViewCallBack} /></span>
+            </>
+            )
     }
     else    {
 
@@ -258,11 +278,11 @@ const EditPlayer = () => {
                     {customers.filter(section => section.Sessions.includes(session)).map((line,id) => {
                         return (
                                 <tr key={id} className='listTable'>
-                                    <td> {line.FirstName} </td>
-                                    <td> {line.LastName} </td>
-                                    <td> {line.ContactNumber} </td>
-                                    <td> {line.CampaignName} </td>
-                                    <td> {line.Sessions } </td>
+                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.FirstName} </td>
+                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}} > {line.LastName} </td>
+                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.ContactNumber} </td>
+                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.CampaignName} </td>
+                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.Sessions } </td>
                                     <td><FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => editLine(id, line)}/></td>
                                     <td><RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => deleteLine(id)}/></td>
                                 </tr> 

@@ -3,12 +3,12 @@ header {
   justify-content:space-between;
   height: 40px;
   width:100%;
+  color:rgb(227, 227, 232);
   border-bottom: 1px solid #b6b6b6;
+  background-color: #7e7b6d;
   box-sizing: border-box;
-  background: #d68585;
   margin-bottom: 10px;
   vertical-align: middle;
-
 }
 
 .titleHeader {
@@ -21,6 +21,7 @@ header {
   font-size: 15px;
   padding-top: 10px;
   margin-right:10px;
+  color:rgb(227, 227, 232);
 }
 
 .menu {
@@ -38,8 +39,10 @@ header {
     display: block;
     margin-top: 20px;
     border-bottom: 1px solid #b6b6b6;
-    background: #d68585;
-    text-align: right;
+    background-color: #7e7b6d;
+    text-align: right;  
+    color:rgb(227, 227, 232);
+
 }
 .footerText {
   padding-right: 20px;

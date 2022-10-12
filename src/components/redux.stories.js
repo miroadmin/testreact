@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
 
 const players = 
 [{FirstName: 'Joe', LastName: 'Caputo', ContactNumber: '07658312387', CampaignName: 'Black Rain', Sessions: 'Black Rain'},
@@ -37,8 +37,6 @@ const playersSlice = createSlice({
             state.clients.splice(key.payload,1);
         },
         modif: (state, data) => {
-            console.log(current(state));
-            console.log(data.payload);
             state.clients[data.payload.key].FirstName= data.payload.FirstName;
             state.clients[data.payload.key].LastName= data.payload.LastName;
             state.clients[data.payload.key].ContactNumber= data.payload.ContactNumber;
@@ -49,5 +47,6 @@ const playersSlice = createSlice({
        
 
 export const {inser, delet, modif } = playersSlice.actions;
+export  {players};
 
 export default playersSlice.reducer;

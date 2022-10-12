@@ -1,21 +1,22 @@
 .titleTable  {
     display: grid;
-    width:100%;
-    grid-template-columns: 250px 250px 200px 230px 250px 50px;
+    width:1240px;
+    grid-template-columns: 250px 250px 200px 230px 250px 60px;
     text-align: left;
     margin-left: 100px;
     vertical-align: middle;
-    color:rgb(2, 2, 118);
+    color:rgb(227, 227, 232);
     font-style: oblique;
     font-size: 16px;
+    background-color: #7e7b6d;
 }
 
 .listTable {
+    font-family: 'Roboto', sans-serif;
     display: grid;
     grid: row;    
     width:1240px;
     grid-template-columns: 250px 250px 200px 230px 250px 30px 30px;
-    /* grid-gap: 10px; */
     margin-left: 100px;
     vertical-align: middle;
     color:rgb(2, 2, 118);
@@ -44,11 +45,17 @@ td, th {
     text-align: left;
     padding: 4px;
   }
-  
+
+ .td1 {
+    cursor:pointer;
+ } 
+ 
 tr:nth-child(even) {
     background-color: #dddddd;
   }
-
+.tr1:nth-child(odd) {
+    background-color: #86805f;
+  }
 .changeColor {
     color:blueviolet;
 }
@@ -88,4 +95,3 @@ input {
     padding: 8px 12px;
     box-sizing: border-box;
 }
-

@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import { configureStore} from  "@reduxjs/toolkit";
 import { Provider } from 'react-redux';
-import playersSlice from "./components/users";
+import playersSlice from "./components/redux.stories";
 
 const store =configureStore({
   reducer: {
