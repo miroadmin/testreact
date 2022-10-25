@@ -13,7 +13,7 @@ const ViewPlayer = (props) => {
                         <input 
                             type='text' 
                             value={props.FirstName}
-                            readonly
+                            readOnly
                         />
                     </div>
                     <div className='form_element'>
@@ -21,7 +21,7 @@ const ViewPlayer = (props) => {
                         <input 
                             type='text' 
                             value={props.LastName}
-                            readonly
+                            readOnly
                         />
                     </div>
 
@@ -30,7 +30,7 @@ const ViewPlayer = (props) => {
                         <input 
                             type='text' 
                             value={props.ContactNumber}
-                            readonly
+                            readOnly
                         />
                     </div>
 
@@ -39,7 +39,7 @@ const ViewPlayer = (props) => {
                         <input 
                             type='text' 
                             value={props.CampaignName}
-                            readonly
+                            readOnly
                         /> 
                     </div>
 
@@ -48,7 +48,7 @@ const ViewPlayer = (props) => {
                         <input 
                             type='text' 
                             value={props.Sessions}
-                            readonly
+                            readOnly
                         />
                     </div>
                     <Button  style={{marginLeft:'200px'}} type='submit' variant="contained" color="success" size="large">Back</Button>

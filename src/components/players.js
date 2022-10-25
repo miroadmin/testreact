@@ -260,6 +260,7 @@ const EditPlayer = () => {
         return (
             <div>
                 <table >
+                <span style={{position: 'absolute', top:'4px', left:'48%', color:'white'}}> WITHOUT REDUX</span>
                     <tr className='titleTable'>
                         {columns.map(({ label, id}) => {
                             return (

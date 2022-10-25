@@ -5,7 +5,7 @@
     text-align: left;
     margin-left: 100px;
     vertical-align: middle;
-    color:rgb(227, 227, 232);
+    color:rgb(54, 54, 85);
     font-style: oblique;
     font-size: 16px;
     background-color: #7e7b6d;
@@ -20,6 +20,7 @@
     margin-left: 100px;
     vertical-align: middle;
     color:rgb(2, 2, 118);
+    font-size: 12px;
 }
 
 th {
@@ -46,22 +47,23 @@ td, th {
     padding: 4px;
   }
 
- .td1 {
+.td1 {
     cursor:pointer;
- } 
- 
+} 
+
 tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #f3efef;
+    :nth-child(odd)
   }
-.tr1:nth-child(odd) {
-    background-color: #86805f;
-  }
+tr:nth-child(odd) {
+    background-color: #d9d7ca;
+}
 .changeColor {
     color:blueviolet;
 }
 
 span {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 

@@ -3,7 +3,8 @@ import {useSelector, useDispatch} from "react-redux";
 import {inser, delet, modif} from './redux.stories';
 import ViewPlayer from "./viewplayer";
 
-
+import { Grid } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid'
 import Button from '@mui/material/Button';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import SearchIcon from '@mui/icons-material/Search';
@@ -11,7 +12,7 @@ import {RiDeleteBin6Line} from "react-icons/ri";
 import {FaRegEdit} from "react-icons/fa";
 import './playerstable.css';
 
-const PlayersTable = () => {
+const PlayersGridSimple = () => {
     const customers = useSelector((state) => state.players.clients);
     const dispatch = useDispatch()
     const [flag, setFlag] = useState('list');
@@ -38,11 +39,7 @@ const PlayersTable = () => {
 
         /*      ADD PLAYER           */
         const add = () => {
-            let test1='';
-            /*       Empty data           */
-            if (firstName==='' && lastName==='')
-                test1='empty';
-            /*       DUPLICATE PLAYER           */
+            /*       DUPLICATE PLAYER?           */
             let test = customers.filter((player => firstName===player.FirstName && (lastName===player.LastName) &&
                 (contactNumber===player.ContactNumber) && (campaignName===player.CampaignName) && 
                 (sessions === player.Sessions) ) ).map((filterplayer) => {
@@ -52,23 +49,18 @@ const PlayersTable = () => {
             if (test.length > 0)  {
                 alert('Just so you know, you already have this player in the database with this game!')
             }
-            else if (test1==='empty') {
-                alert('Empty player!');
-            }
-            else {
-                const ids = customers.map(object => {
-                    return object.id;
-                });
-                const max = Math.max(...ids)+1;
-                dispatch(inser({FirstName: firstName,
+            const ids = customers.map(object => {
+                return object.id;
+            });
+            const max = Math.max(...ids)+1;
+            dispatch(inser({FirstName: firstName,
                             LastName: lastName,
                             ContactNumber: contactNumber,
                             CampaignName: campaignName,
                             Sessions: sessions,
                             id:max,
                         }));
-            }
-            setFlag("list")
+                setFlag("list")
         };
         
     
@@ -263,7 +255,7 @@ const EditPlayer = () => {
 
         return (
             <table>
-                <span style={{position: 'absolute', top:'4px', left:'48%', color:'white'}}> REDUX</span>
+                <span style={{position: 'absolute', top:'4px', left:'45%', color:'white'}}> SIMPLE GRID</span>
                 <thead >
                     <tr className='titleTable'>
                         <th>First Name</th>
@@ -293,15 +285,31 @@ const EditPlayer = () => {
                 <tbody>
                     {customers.filter(section => section.Sessions.includes(session)).map((line,id) => {
                         return (
-                                <tr key={id} className='listTable'>
-                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.FirstName} </td>
-                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}} > {line.LastName} </td>
-                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.ContactNumber} </td>
-                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.CampaignName} </td>
-                                    <td  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.Sessions } </td>
-                                    <td><FaRegEdit  style={{fontSize: '16px', color: 'rgb(118, 2, 4)'}} onClick={() => editLine(id, line)}/></td>
-                                    <td><RiDeleteBin6Line  style={{fontSize: '16px', color: 'rgb(118, 2, 4)'}} onClick={() => deleteLine(id)}/></td>
-                                </tr> 
+                            <div key={id}  style= {{marginLeft: '105px'}} >
+                                    <Grid container spacing={1} className='tr'>
+                                        <Grid item md={2.4}>
+                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.FirstName} </span>
+                                        </Grid>
+                                        <Grid item md={2.45}>
+                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}} > {line.LastName} </span>
+                                        </Grid>
+                                        <Grid item md={1.93}>
+                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.ContactNumber} </span>
+                                        </Grid>
+                                        <Grid item md={2.2}>
+                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.CampaignName} </span>
+                                        </Grid>
+                                        <Grid item md={2.4}>
+                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.Sessions } </span>
+                                        </Grid>
+                                        <Grid item md={0.3}>
+                                            <span><FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => editLine(id, line)}/></span>
+                                        </Grid>
+                                        <Grid item md={0.1}>
+                                            <span><RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => deleteLine(id)}/></span>
+                                        </Grid>
+                                    </Grid>
+                                </div> 
                         )
                     })}
                 </tbody>
@@ -310,4 +318,4 @@ const EditPlayer = () => {
     }
 }
 
-export default PlayersTable;
+export default PlayersGridSimple;

@@ -1,6 +1,8 @@
 import {Routes, Route, Link, BrowserRouter} from 'react-router-dom';
 import Players from "./components/players";
 import PlayersTable from "./components/playerstable";
+import PlayersGridSimple from "./components/playersgridsimple";
+import PlayersGridX from "./components/playersgridx";
 import {MdViewList, MdPlaylistAdd } from "react-icons/md";
 import './App.css';
 
@@ -15,7 +17,9 @@ function App() {
           <Header/>
           <Routes>
               <Route path="/list" exact element={<Players/>} />
-              <Route path="/" exact element={<PlayersTable />} />
+              <Route path="/redux" exact element={<PlayersTable />} />
+              <Route path="/" exact element={<PlayersGridX />} />
+              <Route path="/grid" exact element={<PlayersGridSimple />} />
               <Route path="*" element={<NoPage />} />
           </Routes>
         </BrowserRouter>
@@ -33,8 +37,10 @@ const Header = () => {
       <header className="header"> 
           <span className="titleHeader">Players </span>
           <span className="titleButton"> 
-            <Link to="/" style={{color: 'rgb(227, 227, 232)'} }><MdPlaylistAdd />Redux  </Link>      
-            <Link to="/list" style={{marginLeft:"50px" , color: 'rgb(227, 227, 232)' }}> <MdViewList />without Redux </Link>
+            <Link to="/" style={{marginLeft:"50px" , color: 'rgb(227, 227, 232)' }}> <MdViewList />GridX </Link>
+            <Link to="/redux" style={{marginLeft:"50px" , color: 'rgb(227, 227, 232)'} }><MdPlaylistAdd />Redux</Link>      
+            <Link to="/grid" style={{marginLeft:"50px" , color: 'rgb(227, 227, 232)' }}> <MdViewList />Grid </Link>
+            <Link to="/list" style={{marginLeft:"50px" , color: 'rgb(227, 227, 232)' }}> <MdViewList />Classics </Link>
           </span>
       </header>
       <hr />
@@ -46,9 +52,8 @@ const Header = () => {
 const Footer = () => {
   return (
     <div className='footer'>
-      <div className='footerText'>
-        Miro 2022
-      </div>
+      <a className='footerGitHub' href="https://github.com/miroadmin/testreact" target="_blank" rel="noopener noreferrer" > Visit GitHub</a>
+      <span className='footerText'>Miro 2022</span>
     </div>
   )
 }
