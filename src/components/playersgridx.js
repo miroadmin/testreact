@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {inser, deletX, modifX} from './redux.stories';
 import ViewPlayer from "./viewplayer";
 
-import { DataGrid, GridRowsProp, GridColDef , GridActionsCellItem, GridToolbar  } from '@mui/x-data-grid'
+import { DataGrid, GridRowsProp, GridColDef , GridActionsCellItem} from '@mui/x-data-grid'
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -54,7 +54,6 @@ const PlayersGridX = () => {
         const [contactNumber, setContactNumber] = useState('');
         const [campaignName, setCampaignName] = useState('');
         const [sessions, setSessions] = useState('');      
-        const [id, setId] = useState(0);      
 
         /*      ADD PLAYER           */
         const add = () => {
@@ -154,7 +153,7 @@ const PlayersGridX = () => {
         const deleteLine  = useCallback(
             (key) => () => {
                 setTimeout(() => {
-                    customers.map((row,id) => {
+                    customers.map((row) => {
                         if (row.id === key) {
                             const answer = window.confirm('Are you sure you wish to delete ' + row.LastName + ' ' +row.FirstName);
                             if (answer) {    
@@ -164,7 +163,6 @@ const PlayersGridX = () => {
                     })             
                 });
             },
-            [],
         );
         
         
@@ -330,20 +328,21 @@ const PlayersGridX = () => {
                     // const id1={id:id};
                     // line={...id1,...line}
                     vs.push(line)
-                })
-            }
-            <Box
-                    sx={{
-                        height: 600,
-                        width: '1375px',
-                        marginLeft:'30px',
-                        backgroundColor: '#e3eced',
-                    }}
-                >
-                    <DataGrid rows={vs} columns={columns} rowHeight={25} pageSize={pageSize} 
-                            rowsPerPageOptions={[5, 15, 25]} onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                    />
-                </Box>
+                }
+                )
+                }
+                <Box
+                        sx={{
+                            height: 600,
+                            width: '1375px',
+                            marginLeft:'30px',
+                            backgroundColor: '#e3eced',
+                        }}
+                    >
+                        <DataGrid rows={vs} columns={columns} rowHeight={25} pageSize={pageSize} 
+                                rowsPerPageOptions={[5, 15, 25]} onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                        />
+                    </Box>
             </>
         )
     }

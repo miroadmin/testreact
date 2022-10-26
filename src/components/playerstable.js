@@ -262,8 +262,9 @@ const EditPlayer = () => {
     else    {
 
         return (
-            <table>
+            <>
                 <span style={{position: 'absolute', top:'4px', left:'48%', color:'white'}}> REDUX</span>
+            <table >
                 <thead >
                     <tr className='titleTable'>
                         <th>First Name</th>
@@ -306,6 +307,7 @@ const EditPlayer = () => {
                     })}
                 </tbody>
         </table>
+        </>
         )
     }
 }

@@ -39,16 +39,18 @@ header {
   display: block;
   background-color: #7e7b6d; 
   height: 30px;
-  color:rgb(11, 10, 10);
+  color:rgb(247, 243, 243);
+  width:100%;
 }
 
 .footerText {
-  font-size: 20px;
+  font-size: 16px;
   margin-right: 60px;
   float: right;  
 }
 .footerGitHub {
-  font-size: 20px;
+  font-size: 16px;
   margin-left: 30px;
   float: left;  
+  color:rgb(247, 243, 243);
 }

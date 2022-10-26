@@ -54,7 +54,9 @@ const playersSlice = createSlice({
                     state.clients[id].ContactNumber= data.payload.ContactNumber;
                     state.clients[id].CampaignName= data.payload.CampaignName;
                     state.clients[id].Sessions= data.payload.Sessions;
-            }})
+                }
+                return state.clients
+            })
         }       
     }})
        

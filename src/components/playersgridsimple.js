@@ -4,7 +4,6 @@ import {inser, delet, modif} from './redux.stories';
 import ViewPlayer from "./viewplayer";
 
 import { Grid } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid'
 import Button from '@mui/material/Button';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import SearchIcon from '@mui/icons-material/Search';
@@ -254,66 +253,68 @@ const EditPlayer = () => {
     else    {
 
         return (
-            <table>
+            <>
                 <span style={{position: 'absolute', top:'4px', left:'45%', color:'white'}}> SIMPLE GRID</span>
-                <thead >
-                    <tr className='titleTable'>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Telephone</th>
-                        <th>Campaign Name</th>
-                        <th>Sessions</th>
-                        <th><AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/></th>
-                        <th className='th1'></th>
-                        <th className='th1'></th>
-                        <th className='th1'></th>
-                        <th className='th1'></th>
-                        <th className='th2' >   
-                                <select value={session} style={{fontSize: '20px', width: '245px', paddingTop:'3px'}}
-                                    onChange={(e) => setSession(e.target.value)}>
-                                        <option value="Black Rain">Black Rain</option>
-                                        <option value="One Last Riddle">One Last Riddle</option>
-                                        <option value="The Burning Plague">The Burning Plague</option>
-                                        <option value="The Sea Witch">The Sea Witch</option>
-                                        <option value="Tomb of Horrors">Tomb of Horrors</option>
-                                        <option value=""></option>
-                                </select>  
-                        </th>
-                        <th className='th3' ><SearchIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} /></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {customers.filter(section => section.Sessions.includes(session)).map((line,id) => {
-                        return (
-                            <div key={id}  style= {{marginLeft: '105px'}} >
-                                    <Grid container spacing={1} className='tr'>
-                                        <Grid item md={2.4}>
-                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.FirstName} </span>
+                <table>
+                    <thead >
+                        <tr className='titleTable'>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Telephone</th>
+                            <th>Campaign Name</th>
+                            <th>Sessions</th>
+                            <th><AddToPhotosIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} onClick={() => addLine()}/></th>
+                            <th className='th1'></th>
+                            <th className='th1'></th>
+                            <th className='th1'></th>
+                            <th className='th1'></th>
+                            <th className='th2' >   
+                                    <select value={session} style={{fontSize: '20px', width: '245px', paddingTop:'3px'}}
+                                        onChange={(e) => setSession(e.target.value)}>
+                                            <option value="Black Rain">Black Rain</option>
+                                            <option value="One Last Riddle">One Last Riddle</option>
+                                            <option value="The Burning Plague">The Burning Plague</option>
+                                            <option value="The Sea Witch">The Sea Witch</option>
+                                            <option value="Tomb of Horrors">Tomb of Horrors</option>
+                                            <option value=""></option>
+                                    </select>  
+                            </th>
+                            <th className='th3' ><SearchIcon  style={{fontSize: '30px', color: 'rgb(118, 2, 4)'}} /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {customers.filter(section => section.Sessions.includes(session)).map((line,id) => {
+                            return (
+                                <div key={id}  style= {{marginLeft: '105px'}} >
+                                        <Grid container spacing={1} className='tr'>
+                                            <Grid item md={2.4}>
+                                                <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.FirstName} </span>
+                                            </Grid>
+                                            <Grid item md={2.45}>
+                                                <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}} > {line.LastName} </span>
+                                            </Grid>
+                                            <Grid item md={1.93}>
+                                                <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.ContactNumber} </span>
+                                            </Grid>
+                                            <Grid item md={2.2}>
+                                                <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.CampaignName} </span>
+                                            </Grid>
+                                            <Grid item md={2.4}>
+                                                <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.Sessions } </span>
+                                            </Grid>
+                                            <Grid item md={0.3}>
+                                                <span><FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => editLine(id, line)}/></span>
+                                            </Grid>
+                                            <Grid item md={0.1}>
+                                                <span><RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => deleteLine(id)}/></span>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item md={2.45}>
-                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}} > {line.LastName} </span>
-                                        </Grid>
-                                        <Grid item md={1.93}>
-                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.ContactNumber} </span>
-                                        </Grid>
-                                        <Grid item md={2.2}>
-                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.CampaignName} </span>
-                                        </Grid>
-                                        <Grid item md={2.4}>
-                                            <span  className='td1' onClick= { () => {viewPlayer (line.FirstName, line.LastName, line.ContactNumber,line.CampaignName,line.Sessions )}}> {line.Sessions } </span>
-                                        </Grid>
-                                        <Grid item md={0.3}>
-                                            <span><FaRegEdit  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => editLine(id, line)}/></span>
-                                        </Grid>
-                                        <Grid item md={0.1}>
-                                            <span><RiDeleteBin6Line  style={{fontSize: '25px', color: 'rgb(118, 2, 4)'}} onClick={() => deleteLine(id)}/></span>
-                                        </Grid>
-                                    </Grid>
-                                </div> 
-                        )
-                    })}
-                </tbody>
-        </table>
+                                    </div> 
+                            )
+                        })}
+                    </tbody>
+            </table>
+        </>
         )
     }
 }
